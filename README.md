@@ -1,16 +1,13 @@
-# reviews-service
-Summary includes video, stats summary, and nav bar
+# YumNoms Reviews
 
-# Project Name
-
-> Project description
+> The Reviews component for the YumNoms website.
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/yumnoms/photo-carousel-service
+  - https://github.com/yumnoms/popular-dishes-service
+  - https://github.com/yumnoms/reservations-service
+  - https://github.com/yumnoms/reviews-proxy
 
 ## Table of Contents
 
