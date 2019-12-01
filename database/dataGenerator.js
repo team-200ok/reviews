@@ -1,9 +1,10 @@
-var faker = require('faker');
+const faker = require('faker');
 
-dateGenerator = () => {
-  var year = Math.floor(Math.random() * 2) + 2017;
-  var month = Math.floor(Math.random() * 11) + 1;
-  var day = Math.floor(Math.random() * 27) + 1;
+
+const dateGenerator = () => {
+  const year = Math.floor(Math.random() * 2) + 2017;
+  let month = Math.floor(Math.random() * 11) + 1;
+  let day = Math.floor(Math.random() * 27) + 1;
   if (month < 10) {
     month = `0${month}`;
   }
@@ -13,23 +14,23 @@ dateGenerator = () => {
   return `${year}-${month}-${day}`;
 };
 
-stringPicker = () => {
+const stringPicker = () => {
   // label: string, one of 'food', 'drink', 'menu', 'inside', 'outside'
-  var options = ['food', 'drink', 'menu', 'inside', 'outside'];
-  var num = Math.floor(Math.random() * 4);
+  const options = ['food', 'drink', 'menu', 'inside', 'outside'];
+  const num = Math.floor(Math.random() * 4);
   return options[num];
 };
 
-var sampleData = {
+const sampleData = {
   reviews: [],
   businesses: [],
-  photos: []
+  photos: [],
 };
 
-for (i = 0; i < 5; i++) {
-  var reviewId = faker.random.alphaNumeric(22);
-  var businessId = faker.random.alphaNumeric(22);
-  var review = {
+for (let i = 0; i < 5; i += 1) {
+  const reviewId = faker.random.alphaNumeric(22);
+  const businessId = faker.random.alphaNumeric(22);
+  const review = {
     review_id: reviewId,
     business_id: businessId,
     user: faker.name.firstName(),
@@ -38,21 +39,25 @@ for (i = 0; i < 5; i++) {
     text: faker.lorem.paragraphs(),
     useful: Math.floor(Math.random() * 5),
     funny: Math.floor(Math.random() * 5),
-    cool: Math.floor(Math.random() * 5)
+    cool: Math.floor(Math.random() * 5),
   };
-  var photo = {
+  const photo = {
     photo_id: faker.random.alphaNumeric(22),
     review_id: reviewId,
     caption: faker.lorem.words(),
     label: stringPicker(),
-    imageUrl: faker.image.food()
+    imageUrl: faker.image.food(),
   };
-  var business = {
+  const business = {
     business_id: businessId,
-    name: faker.company.companyName()
-  }
+    name: faker.company.companyName(),
+  };
   // push the object to sampleData
   sampleData.reviews.push(review);
   sampleData.businesses.push(business);
   sampleData.photos.push(photo);
 }
+
+const insertSampleData = () => {
+  // do something
+};
