@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const faker = require('faker');
+// const db = require('./index.js');
 
 
 const dateGenerator = () => {
@@ -27,7 +29,7 @@ const sampleData = {
   photos: [],
 };
 
-for (let i = 0; i < 5; i += 1) {
+for (let i = 0; i < 100; i += 1) {
   const reviewId = faker.random.alphaNumeric(22);
   const businessId = faker.random.alphaNumeric(22);
   const review = {
@@ -58,6 +60,6 @@ for (let i = 0; i < 5; i += 1) {
   sampleData.photos.push(photo);
 }
 
-const insertSampleData = () => {
-  // do something
+module.exports = {
+  sampleData,
 };

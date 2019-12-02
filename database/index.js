@@ -1,15 +1,10 @@
 const Sequelize = require('sequelize');
+const sampleData = require('./dataGenerator.js');
 
 const sequelize = new Sequelize('yumnoms', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
 });
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection established successfully');
-  });
 
 const Review = sequelize.define('review', {
   review_id: { type: Sequelize.STRING },
@@ -36,6 +31,9 @@ const Photo = sequelize.define('photo', {
   imageUrl: { type: Sequelize.STRING },
 });
 
-Review.sync({ force: true });
-Business.sync({ force: true });
-Photo.sync({ force: true });
+Review.sync({ force: true, logging: false })
+  .then(() => Review.bulkCreate(sampleData.sampleData.reviews, { logging: false }))
+Business.sync({ force: true, logging: false })
+  .then(() => Business.bulkCreate(sampleData.sampleData.businesses), { logging: false });
+Photo.sync({ force: true, logging: false })
+  .then(() => Photo.bulkCreate(sampleData.sampleData.photos), { logging: false });
