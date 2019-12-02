@@ -17,7 +17,7 @@
 
 ## Usage
 
-> Some usage instructions
+> Requires a MySQL database named 'yumnoms'
 
 ## Requirements
 
