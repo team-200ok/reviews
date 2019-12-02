@@ -1,27 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const faker = require('faker');
-// const db = require('./index.js');
-
-
-const dateGenerator = () => {
-  const year = Math.floor(Math.random() * 2) + 2017;
-  let month = Math.floor(Math.random() * 11) + 1;
-  let day = Math.floor(Math.random() * 27) + 1;
-  if (month < 10) {
-    month = `0${month}`;
-  }
-  if (day < 10) {
-    day = `0${day}`;
-  }
-  return `${year}-${month}-${day}`;
-};
-
-const stringPicker = () => {
-  // label: string, one of 'food', 'drink', 'menu', 'inside', 'outside'
-  const options = ['food', 'drink', 'menu', 'inside', 'outside'];
-  const num = Math.floor(Math.random() * 4);
-  return options[num];
-};
 
 const sampleData = {
   reviews: [],
@@ -37,7 +15,7 @@ for (let i = 0; i < 100; i += 1) {
     business_id: businessId,
     user: faker.name.firstName(),
     stars: Math.floor(Math.random() * 4) + 1,
-    date: dateGenerator(),
+    date: faker.date.past(3),
     text: faker.lorem.paragraphs(),
     useful: Math.floor(Math.random() * 5),
     funny: Math.floor(Math.random() * 5),
@@ -47,14 +25,13 @@ for (let i = 0; i < 100; i += 1) {
     photo_id: faker.random.alphaNumeric(22),
     review_id: reviewId,
     caption: faker.lorem.words(),
-    label: stringPicker(),
+    label: faker.random.arrayElement(['food', 'drink', 'menu', 'inside', 'outside']),
     imageUrl: faker.image.food(),
   };
   const business = {
     business_id: businessId,
     name: faker.company.companyName(),
   };
-  // push the object to sampleData
   sampleData.reviews.push(review);
   sampleData.businesses.push(business);
   sampleData.photos.push(photo);

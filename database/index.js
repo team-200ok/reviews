@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const sampleData = require('./dataGenerator.js');
 
 const sequelize = new Sequelize('yumnoms', 'root', '', {
   host: 'localhost',
@@ -31,9 +30,8 @@ const Photo = sequelize.define('photo', {
   imageUrl: { type: Sequelize.STRING },
 });
 
-Review.sync({ force: true, logging: false })
-  .then(() => Review.bulkCreate(sampleData.sampleData.reviews, { logging: false }))
-Business.sync({ force: true, logging: false })
-  .then(() => Business.bulkCreate(sampleData.sampleData.businesses), { logging: false });
-Photo.sync({ force: true, logging: false })
-  .then(() => Photo.bulkCreate(sampleData.sampleData.photos), { logging: false });
+module.exports = {
+  Review,
+  Business,
+  Photo,
+};
