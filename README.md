@@ -17,7 +17,7 @@
 
 ## Usage
 
-> Requires a MySQL database named 'yumnoms'
+> Requires a MySQL database named 'yumnoms' and, for testing purposes, a database named 'yumnoms_test'
 
 ## Requirements
 

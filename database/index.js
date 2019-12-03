@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+const useDb = process.env.NODE_ENV === 'test' ? 'yumnoms_test' : 'yumnoms';
 
-const sequelize = new Sequelize('yumnoms', 'root', '', {
+const sequelize = new Sequelize(useDb, 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
 });
@@ -31,6 +32,7 @@ const Photo = sequelize.define('photo', {
 });
 
 module.exports = {
+  sequelize,
   Review,
   Business,
   Photo,
