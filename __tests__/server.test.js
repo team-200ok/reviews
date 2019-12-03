@@ -45,18 +45,39 @@ afterAll(async () => {
   await db.Business.drop();
   await db.Photo.drop();
   await db.Review.drop();
+  db.sequelize.close();
 });
-// create a new review query
-// send that query to the server
-// should get a response 201
 
-// beforeAll(() => {
-//   return initializeDatabase();
-// });
+describe('GET /api/review/:business_id', () => {
+  test('It responds with an array of all reviews for the business, as well as an array of photos that go with the reviews', async () => {
+    const response = await request(app).get('/api/review/o3fu9nk0hspmvrcp13jw92');
+    expect(response.body).toHaveProperty('reviews');
+    expect(response.body).toHaveProperty('photos');
+    expect(response.body.reviews.length).toBe(1);
+    expect(response.body.photos.length).toBe(1);
+    expect(response.statusCode).toBe(200);
+  });
+});
 
-// test('server updates database on POST request', () => {
-//   //
-// })
+describe('POST /api/review', () => {
+  test('It saves a new review to the database', async () => {
+    const newReview = await request(app).post('/api/review')
+      .send({
+        review_id: 'b0yqnoyzon986bhznes0f2',
+        business_id: 'o3fu9nk0hspmvrcp13jw92',
+        user: 'Jessica',
+        stars: 5,
+        date: '2019-03-23',
+        text: 'Tasty',
+        useful: 0,
+        funny: 0,
+        cool: 1,
+      });
+    expect(newReview.statusCode).toBe(201);
+    const response = await request(app).get('/api/review/o3fu9nk0hspmvrcp13jw92');
+    expect(response.body.reviews.length).toBe(2);
+  });
+});
 
 test('it adds two numbers', () => {
   expect(1 + 1).toBe(2);
