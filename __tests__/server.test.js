@@ -1,4 +1,6 @@
 /* eslint-disable no-undef */
+import 'babel-polyfill';
+
 process.env.NODE_ENV = 'test';
 const request = require('supertest');
 const db = require('../database/index.js');
@@ -91,8 +93,4 @@ describe('POST /api/photo', () => {
     // const response = await request(app).get('/api/review/o3fu9nk0hspmvrcp13jw92');
     // expect(response.body.reviews.length).toBe(2);
   });
-});
-
-test('it adds two numbers', () => {
-  expect(1 + 1).toBe(2);
 });

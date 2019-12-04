@@ -14,6 +14,7 @@
     "test": "jest --coverage --silent"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "mysql2": "^2.0.1",
@@ -26,7 +27,10 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
@@ -36,8 +40,17 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "faker": "^4.1.0",
     "jest": "^24.9.0",
+    "jest-environment-enzyme": "^7.1.2",
+    "jest-enzyme": "^7.1.2",
+    "react-addons-test-utils": "^15.6.2",
     "supertest": "^4.0.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
+  },
+  "jest": {
+    "testEnvironment": "enzyme",
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
+    ]
   }
 }
