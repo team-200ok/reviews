@@ -49,12 +49,10 @@ afterAll(async () => {
 });
 
 describe('GET /api/review/:business_id', () => {
-  test('It responds with an array of all reviews for the business, as well as an array of photos that go with the reviews', async () => {
+  test('It responds with an array of objects which have properties of reviews and photos for the business', async () => {
     const response = await request(app).get('/api/review/o3fu9nk0hspmvrcp13jw92');
-    expect(response.body).toHaveProperty('reviews');
-    expect(response.body).toHaveProperty('photos');
-    expect(response.body.reviews.length).toBe(1);
-    expect(response.body.photos.length).toBe(1);
+    expect(response.body[0]).toHaveProperty('review_id');
+    expect(response.body[0]).toHaveProperty('photo_id');
     expect(response.statusCode).toBe(200);
   });
 });
@@ -75,7 +73,23 @@ describe('POST /api/review', () => {
       });
     expect(newReview.statusCode).toBe(201);
     const response = await request(app).get('/api/review/o3fu9nk0hspmvrcp13jw92');
-    expect(response.body.reviews.length).toBe(2);
+    expect(response.body.length).toBe(2);
+  });
+});
+
+describe('POST /api/photo', () => {
+  test('It saves a new photo to the database', async () => {
+    const newPhoto = await request(app).post('/api/photo')
+      .send({
+        review_id: 'b0yqnoyzon986bhznes0f2',
+        photo_id: 'j2id4nk0hspmvrcp13jw92',
+        caption: 'melt-in-your-mouth',
+        label: 'inside',
+        imageUrl: 'http://lorempixel.com/640/480/food',
+      });
+    expect(newPhoto.statusCode).toBe(201);
+    // const response = await request(app).get('/api/review/o3fu9nk0hspmvrcp13jw92');
+    // expect(response.body.reviews.length).toBe(2);
   });
 });
 

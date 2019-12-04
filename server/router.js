@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/newline-after-import */
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -11,10 +12,7 @@ app.use(express.static('public'));
 
 app.get('/api/review/:businessId', (req, res) => {
   controller.getReviewsAndPhotos(req.params.businessId)
-    .then((data) => {
-      console.log(data);
-      res.send(data);
-    })
+    .then((data) => res.send(data))
     .catch((err) => console.error(err));
 });
 
@@ -26,10 +24,16 @@ app.get('/api/business/:businessId', (req, res) => {
 
 app.post('/api/review', (req, res) => {
   // request should include the fields needed to create a new record in the database
-  // query the database to create a new record
-  // pass back as response a status OK
-  // catch err block
-  res.send(201);
+  console.log(req.body); // req.body is empty right now and failing tests
+  controller.postReview(req.body)
+    .then((msg) => res.status(201).send(msg))
+    .catch((err) => console.error(err));
+});
+
+app.post('/api/photo', (req, res) => {
+  controller.postPhoto(req.body)
+    .then((msg) => res.status(201).send(msg))
+    .catch((err) => console.error(err));
 });
 
 module.exports = app;
