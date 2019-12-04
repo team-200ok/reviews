@@ -9,7 +9,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-app.get('/api/review/', (req, res) => res.send('Hello from server!'));
+app.get('/api/review/:businessId', (req, res) => {
+  controller.getReviewsAndPhotos(req.params.businessId)
+    .then((data) => {
+      console.log(data);
+      res.send(data);
+    })
+    .catch((err) => console.error(err));
+});
 
 app.get('/api/business/:businessId', (req, res) => {
   controller.getBusiness(req.params.businessId)
