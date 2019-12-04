@@ -11,7 +11,7 @@
     "build": "webpack -d --watch",
     "db-seed": "node database/seed.js",
     "start": "nodemon ./server/server.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage --silent"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
