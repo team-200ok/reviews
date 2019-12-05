@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount, render } from 'enzyme';
 import App from '../client/app';
 import Feed from '../client/feed';
 import Review from '../client/review';
@@ -10,8 +10,9 @@ describe('<App />', () => {
   });
 
   it('renders at least one feed and review component', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.find(<Feed />)).to.have.lengthOf(1);
+    const wrapper = mount(<App />);
+    expect(wrapper.find(Feed).length).toBe(1);
+    expect(wrapper.find(Review).length).toBe(1);
   });
 });
 
