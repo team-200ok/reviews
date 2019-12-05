@@ -1,10 +1,7 @@
+/* eslint-disable import/extensions */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './app.jsx';
 
-class MyComponent extends React.Component {
-  render() {
-    return <div>Hello from React</div>;
-  }
-}
-
-ReactDOM.render(<MyComponent />, document.getElementById('app'));
+// eslint-disable-next-line no-undef
+ReactDOM.render(<App />, document.getElementById('app'));
