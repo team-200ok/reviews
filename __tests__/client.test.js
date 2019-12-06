@@ -12,7 +12,7 @@ describe('<App />', () => {
   it('renders at least one feed and review component', () => {
     const wrapper = mount(<App />);
     expect(wrapper.find(Feed).length).toBe(1);
-    expect(wrapper.find(Review).length).toBe(1);
+    expect(wrapper.find(Review).length).toBeGreaterThanOrEqual(1);
   });
 });
 
