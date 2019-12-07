@@ -9,9 +9,14 @@ const Modal = (props) => {
       <div>
         <Window>
           <Button type="button" onClick={props.onClick}>Close</Button>
-          <PhotoBox>
-            {props.photos.map((item) => <Photo src={item.imageUrl} />)}
-          </PhotoBox>
+          <Gallery>
+            <Primary>
+              <Photo src={props.photos[0].imageUrl} />
+            </Primary>
+            <PhotoBox>
+              {props.photos.map((item) => <Photo src={item.imageUrl} />)}
+            </PhotoBox>
+          </Gallery>
         </Window>
       </div>
     );
@@ -28,28 +33,55 @@ const Window = styled.div`
   width:100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  // flex-wrap: wrap;
+  // justify-content: center;
+`;
+
+const Button = styled.button`
+  // flex-basis: 100%;
+  background: transparent;
+  color: white;
+  align-self: flex-end;
+`;
+
+const Gallery = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+`;
+
+const Primary = styled.div`
+  background: black;
+  flex-basis: 0;
+  flex-grow: 2;
+  align-items: center;
+  justify-content: center;
+  // align-self: flex-start;
 `;
 
 const PhotoBox = styled.div`
-  position:fixed;
+  flex-grow: 1;
+  // position:fixed;
+  // align-self: flex-end;
   background: white;
-  width: 80%;
-  height: auto;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 0;
+  // width: 80%;
+  // height: auto;
+  // top:50%;
+  // left:50%;
+  // transform: translate(-50%,-50%);
 `;
 
 const Photo = styled.img`
   border-radius: 8px;
-  max-width: 40%;
+  max-width: 60%;
   height: auto;
-  margin: 10px;
-`;
-
-const Button = styled.button`
-  background: transparent;
-  color: white;
+  margin: 2px;
 `;
 
 export default Modal;

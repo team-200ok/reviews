@@ -10,7 +10,6 @@ class SmallGallery extends React.Component {
     this.state = {
       show: false,
     };
-    this.photos = ['http://lorempixel.com/640/480/food', 'http://lorempixel.com/640/480/food', 'http://lorempixel.com/640/480/food'];
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
   }
@@ -36,16 +35,19 @@ class SmallGallery extends React.Component {
 }
 
 const PhotoBox = styled.div`
+  display: flex;
   flex: 1;
   flexDirection: row;
+  overflow: hidden;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const Photo = styled.img`
-  border-radius: 8px;
-  max-width: 40%;
-  height: auto;
-  margin: 10px;
-  flex-grow: 1;
+  border-radius: 4px;
+  max-width: 168px;
+  max-height: 168px;
+  // flex-grow: 1;
 `;
 
 export default SmallGallery;
