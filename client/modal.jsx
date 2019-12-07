@@ -10,7 +10,7 @@ const Modal = (props) => {
         <Window>
           <button type="button" onClick={props.onClick}>Close</button>
           <PhotoBox>
-            {props.photos.map((item) => <Photo src={item} />)}
+            {props.photos.map((item) => <Photo src={item.imageUrl} />)}
           </PhotoBox>
         </Window>
       </div>

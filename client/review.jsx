@@ -17,11 +17,10 @@ class Review extends React.Component {
         <div>
           <div>
             <Stars stars={this.props.data.stars} />
-            Date: {this.props.data.date} </div>
-          <div>Review: {this.props.data.text} </div>
-          {/* <img src={this.props.data.imageUrl} /> */}
+            {this.props.data.date} </div>
+          <div>{this.props.data.text} </div>
         </div>
-        <SmallGallery />
+        <SmallGallery photos={this.props.data.photos} />
         <div>
           <Button>Useful: {this.props.data.useful} </Button>
           <Button>Funny: {this.props.data.funny} </Button>
