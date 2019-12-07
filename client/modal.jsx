@@ -8,7 +8,7 @@ const Modal = (props) => {
     return (
       <div>
         <Window>
-          <button type="button" onClick={props.onClick}>Close</button>
+          <Button type="button" onClick={props.onClick}>Close</Button>
           <PhotoBox>
             {props.photos.map((item) => <Photo src={item.imageUrl} />)}
           </PhotoBox>
@@ -47,8 +47,9 @@ const Photo = styled.img`
   margin: 10px;
 `;
 
-// const Button = styled.button`
-
-// `;
+const Button = styled.button`
+  background: transparent;
+  color: white;
+`;
 
 export default Modal;
