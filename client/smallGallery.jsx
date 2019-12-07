@@ -24,7 +24,6 @@ class SmallGallery extends React.Component {
   }
 
   render() {
-    console.log(this.props.photos);
     return (
       <div>
         <PhotoBox>
@@ -46,6 +45,7 @@ const Photo = styled.img`
   max-width: 40%;
   height: auto;
   margin: 10px;
+  flex-grow: 1;
 `;
 
 export default SmallGallery;
