@@ -9,13 +9,17 @@ class SmallGallery extends React.Component {
     super(props);
     this.state = {
       show: false,
+      clickedPhoto: '',
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
   }
 
   showModal() {
-    this.setState({ show: true });
+    this.setState({
+      show: true,
+      clickedPhoto: event.target.src,
+     });
   }
 
   hideModal() {
