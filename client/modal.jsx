@@ -35,8 +35,6 @@ const Window = styled.div`
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  // flex-wrap: wrap;
-  // justify-content: center;
 `;
 
 const Button = styled.button`
@@ -55,37 +53,32 @@ const Gallery = styled.div`
 
 const Primary = styled.div`
   background: black;
-  flex-basis: 0;
-  flex-grow: 2.5;
+  display: flex;
   align-items: center;
   justify-content: center;
-  // align-self: flex-start;
   border-radius: 6px 0px 0px 6px;
   padding: 0px 6px;
 
 `;
 
 const PhotoBox = styled.div`
-  flex-grow: 1;
-  // position:fixed;
+  width: 360px;
   background: white;
   flex-direction: column;
   justify-content: center;
-  flex-basis: 0;
   border-radius: 0px 6px 6px 0px;
-  padding: 30px;
-  overflow: hidden;
+  padding: 18px;
 `;
 
 const PrimaryPhoto = styled.img`
-  max-width: 100%;
-  height: auto;
+  width: 100%;
 `;
 
 const Photo = styled.img`
   border-radius: 2px;
-  max-width: 100%;
-  height: auto;
+  width: 300px;
+  height: 165px;
+  object-fit: cover;
 `;
 
 export default Modal;

@@ -58,19 +58,12 @@ const User = styled.div`
   font-weight: 700;
   color: #0073bb;
   flexDirection: row;
-  // justify-content: center;
-  // align-items: flex-start;
-  // margin: 0% 5%
   width: 222px;
-  // flex-basis: auto;
-  // flex-grow: 1;
 `;
 
 const ReviewBody = styled.div`
   font-family: Helvetica Neue;
   width: 371px;
-  // flex-basis: auto;
-  // flex-grow: 2;
 `;
 
 const Date = styled.div`

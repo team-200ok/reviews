@@ -42,8 +42,9 @@ const PhotoBox = styled.div`
 
 const Photo = styled.img`
   border-radius: 4px;
-  max-width: 168px;
-  max-height: 168px;
+  width: 168px;
+  height: 168px;
+  object-fit: cover;
   margin: 5px 10px 5px 0px;
 `;
 
