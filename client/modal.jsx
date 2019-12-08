@@ -8,10 +8,15 @@ const Modal = (props) => {
     return (
       <div>
         <Window>
-          <button type="button" onClick={props.onClick}>Close</button>
-          <PhotoBox>
-            {props.photos.map((item) => <Photo src={item.imageUrl} />)}
-          </PhotoBox>
+          <Button type="button" onClick={props.onClick}>Close</Button>
+          <Gallery>
+            <Primary>
+              <PrimaryPhoto src={props.photos[0].imageUrl} />
+            </Primary>
+            <PhotoBox>
+              {props.photos.map((item) => <Photo src={item.imageUrl} />)}
+            </PhotoBox>
+          </Gallery>
         </Window>
       </div>
     );
@@ -28,27 +33,52 @@ const Window = styled.div`
   width:100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+`;
+
+const Button = styled.button`
+  background: transparent;
+  color: white;
+  align-self: flex-end;
+  border: none;
+`;
+
+const Gallery = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  margin: 30px;
+`;
+
+const Primary = styled.div`
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px 0px 0px 6px;
+  padding: 0px 6px;
+
 `;
 
 const PhotoBox = styled.div`
-  position:fixed;
+  width: 360px;
   background: white;
-  width: 80%;
-  height: auto;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0px 6px 6px 0px;
+  padding: 18px;
+`;
+
+const PrimaryPhoto = styled.img`
+  width: 100%;
 `;
 
 const Photo = styled.img`
-  border-radius: 8px;
-  max-width: 40%;
-  height: auto;
-  margin: 10px;
+  border-radius: 2px;
+  width: 300px;
+  height: 165px;
+  object-fit: cover;
 `;
-
-// const Button = styled.button`
-
-// `;
 
 export default Modal;
