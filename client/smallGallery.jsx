@@ -36,10 +36,7 @@ class SmallGallery extends React.Component {
 
 const PhotoBox = styled.div`
   display: flex;
-  flex: 1;
   flexDirection: row;
-  overflow: hidden;
-  justify-content: space-between;
   flex-wrap: wrap;
 `;
 
@@ -47,7 +44,7 @@ const Photo = styled.img`
   border-radius: 4px;
   max-width: 168px;
   max-height: 168px;
-  // flex-grow: 1;
+  margin: 5px 10px 5px 0px;
 `;
 
 export default SmallGallery;

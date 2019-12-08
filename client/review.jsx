@@ -3,7 +3,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Stars from './stars.jsx';
 import SmallGallery from './smallGallery.jsx';
-import Icon from './icons.jsx';
+import { UsefulIcon, FunnyIcon, CoolIcon } from './icons.jsx';
 
 class Review extends React.Component {
   constructor(props) {
@@ -25,11 +25,17 @@ class Review extends React.Component {
           <SmallGallery photos={this.props.data.photos} />
           <div>
             <Button>
-              <Icon/>
-              <span style={{padding: '5px'}}>Useful {this.props.data.useful} </span>
+              <UsefulIcon />
+              <span> Useful {this.props.data.useful} </span>
             </Button>
-            <Button>Funny {this.props.data.funny} </Button>
-            <Button>Cool {this.props.data.cool} </Button>
+            <Button>
+              <FunnyIcon />
+              <span> Funny {this.props.data.funny} </span>
+            </Button>
+            <Button>
+              <CoolIcon />
+              <span> Cool {this.props.data.cool} </span>
+            </Button>
           </div>
         </ReviewBody>
       </TotalReview>
@@ -86,6 +92,7 @@ const Button = styled.button`
   padding: 0.25em 1em;
   font-weight: 700;
   align-items: center;
+  justify-content: space-evenly;
 `;
 
 export default Review;
