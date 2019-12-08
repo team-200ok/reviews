@@ -14,13 +14,14 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.apiGet(this.props.businessId)
+    const businessId = window.location.pathname;
+    this.apiGet(businessId);
   }
 
   apiGet(businessId) {
     $.ajax({
       method: 'GET',
-      url: `/api/review/${businessId}`,
+      url: `/api/business${businessId}`,
     })
       .then((data) => {
         console.log('successful get');

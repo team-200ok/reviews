@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static('public'));
+app.use('/:id', express.static('public'));
 
 app.get('/api/review/:businessId', (req, res) => {
   controller.getReviewsAndPhotos(req.params.businessId)
@@ -17,7 +17,9 @@ app.get('/api/review/:businessId', (req, res) => {
 });
 
 app.get('/api/business/:businessId', (req, res) => {
+  console.log(req.params.businessId);
   controller.getBusiness(req.params.businessId)
+    .then((data) => controller.getReviewsAndPhotos(data.dataValues.business_id))
     .then((data) => res.send(data))
     .catch((err) => console.error(err));
 });
