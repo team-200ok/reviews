@@ -1,7 +1,7 @@
 const db = require('../database/index.js');
 
 module.exports = {
-  // getBusiness: (id) => db.Business.findOne({ where: { business_id: id } }),
+  getBusiness: (id) => db.Business.findOne({ where: { id } }),
   getReviews: (id) => db.Review.findAll({ where: { business_id: id } }),
   // eslint-disable-next-line arrow-body-style
   getReviewsAndPhotos: (id) => {

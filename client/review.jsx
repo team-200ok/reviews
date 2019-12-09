@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 import React from 'react';
+import Moment from 'moment';
 import styled, { css } from 'styled-components';
 import Stars from './stars.jsx';
 import SmallGallery from './smallGallery.jsx';
@@ -19,11 +20,11 @@ class Review extends React.Component {
           <div>
             <Date>
               <Stars stars={this.props.data.stars} />
-              {' ' + this.props.data.date} </Date>
+              {' ' + Moment(this.props.data.date).format('MM/DD/YYYY')} </Date>
             <Text>{this.props.data.text} </Text>
           </div>
           <SmallGallery photos={this.props.data.photos} />
-          <div>
+          <ButtonBox>
             <Button>
               <UsefulIcon />
               <span> Useful {this.props.data.useful} </span>
@@ -36,7 +37,7 @@ class Review extends React.Component {
               <CoolIcon />
               <span> Cool {this.props.data.cool} </span>
             </Button>
-          </div>
+          </ButtonBox>
         </ReviewBody>
       </TotalReview>
     );
@@ -76,14 +77,20 @@ const Text = styled.div`
   margin-bottom: 12 px;
 `;
 
+const ButtonBox = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
 const Button = styled.button`
   background: transparent;
   border-radius: 3px;
   border: 1px solid #e6e6e6;
   color: #666666;
-  margin: 0.5em 1em;
+  margin: 0.5em 1em 0.5em 0em;
   padding: 0.25em 1em;
   font-weight: 700;
+  display: flex;
   align-items: center;
   justify-content: space-evenly;
 `;
