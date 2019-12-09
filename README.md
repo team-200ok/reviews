@@ -19,6 +19,12 @@
 
 > Requires a MySQL database named 'yumnoms' and, for testing purposes, a database named 'yumnoms_test'
 
+- Install dependencies with `npm install`
+- Seed the database with `db-seed`
+- Start webpack with `npm run build`
+- Start the server with `npm start`
+- Run tests with `npm test`
+
 ## Requirements
 
 An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).

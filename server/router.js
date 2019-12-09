@@ -24,6 +24,12 @@ app.get('/api/business/:businessId', (req, res) => {
     .catch((err) => console.error(err));
 });
 
+app.put('/api/vote/:reviewId/:vote', (req, res) => {
+  controller.putVote(req.params.reviewId, req.params.vote) // should send back an updated review object
+    .then((data) => res.send(data))
+    .catch((err) => console.error(err));
+})
+
 app.post('/api/review', (req, res) => {
   // request should include the fields needed to create a new record in the database
   console.log(req.body); // req.body is empty right now and failing tests

@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import React from 'react';
 import Moment from 'moment';
+import $ from 'jquery';
 import styled, { css } from 'styled-components';
 import Stars from './stars.jsx';
 import SmallGallery from './smallGallery.jsx';
@@ -9,33 +10,49 @@ import { UsefulIcon, FunnyIcon, CoolIcon } from './icons.jsx';
 class Review extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      review: this.props.data,
+      photos: this.props.data.photos,
+    };
+    this.onVote = this.onVote.bind(this);
+  }
+
+  onVote() {
+    const name = event.target.id;
+    $.ajax({
+      method: 'PUT',
+      url: `/api/vote/${this.state.review.review_id}/${name}`,
+    })
+      .then((res) => {
+        this.setState({ review: res });
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {
     return (
       <TotalReview>
-        <User>{this.props.data.user}</User>
+        <User>{this.state.review.user}</User>
         <ReviewBody>
           <div>
             <Date>
-              <Stars stars={this.props.data.stars} />
-              {' ' + Moment(this.props.data.date).format('MM/DD/YYYY')} </Date>
-            <Text>{this.props.data.text} </Text>
+              <Stars stars={this.state.review.stars} />
+              {' ' + Moment(this.state.review.date).format('MM/DD/YYYY')} </Date>
+            <Text>{this.state.review.text} </Text>
           </div>
-          <SmallGallery photos={this.props.data.photos} />
+          <SmallGallery photos={this.state.photos} />
           <ButtonBox>
-            <Button>
+            <Button id="useful" onClick={this.onVote}>
               <UsefulIcon />
-              <span> Useful {this.props.data.useful} </span>
+              <span id="useful"> Useful {this.state.review.useful} </span>
             </Button>
-            <Button>
+            <Button id="funny" onClick={this.onVote}>
               <FunnyIcon />
-              <span> Funny {this.props.data.funny} </span>
+              <span id="funny"> Funny {this.state.review.funny} </span>
             </Button>
-            <Button>
+            <Button id="cool" onClick={this.onVote}>
               <CoolIcon />
-              <span> Cool {this.props.data.cool} </span>
+              <span id="cool"> Cool {this.state.review.cool} </span>
             </Button>
           </ButtonBox>
         </ReviewBody>
