@@ -21,8 +21,9 @@
 
 This app attaches to a div with id `reviews`
 - Install dependencies with `npm install`
-- Seed the database with `db-seed`
-- Start webpack with `npm run build`
+- The database requires a user 'student' with password 'student' and a database called 'yumnoms'
+- Seed the database with `npm run db-seed`
+- Start webpack (production mode) with `npm run build`
 - Start the server with `npm start`
 - Run tests with `npm test`
 

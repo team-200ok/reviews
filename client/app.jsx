@@ -24,7 +24,6 @@ class App extends React.Component {
       url: `http://localhost:3001/api/business${businessId}`,
     })
       .then((data) => {
-        console.log('successful get');
         this.extractReviews(data);
       })
       .catch((err) => console.error(err));

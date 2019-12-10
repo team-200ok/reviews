@@ -8,7 +8,8 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "build": "webpack -d --watch",
+    "build-dev": "webpack -d --watch",
+    "build": "webpack --mode=production",
     "db-seed": "node database/seed.js",
     "start": "nodemon ./server/server.js",
     "test": "jest --coverage --silent"
