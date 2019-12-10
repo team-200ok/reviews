@@ -32,7 +32,10 @@ class Review extends React.Component {
   render() {
     return (
       <TotalReview>
-        <User>{this.state.review.user}</User>
+        <User>
+          <img height="60" src="https://s3-media2.fl.yelpcdn.com/assets/srv0/yelp_styleguide/514f6997a318/assets/img/default_avatars/user_60_square.png" />
+          <div style={{ margin: '0 0 0 10px' }}>{this.state.review.user}</div>
+        </User>
         <ReviewBody>
           <div>
             <Date>
@@ -75,6 +78,7 @@ const User = styled.div`
   font-size: 14 px;
   font-weight: 700;
   color: #0073bb;
+  display: flex;
   flexDirection: row;
   width: 222px;
 `;
@@ -87,6 +91,8 @@ const ReviewBody = styled.div`
 const Date = styled.div`
   font-weight: 400;
   color: #666;
+  display: flex;
+  flexDirection: row;
 `;
 
 const Text = styled.div`
