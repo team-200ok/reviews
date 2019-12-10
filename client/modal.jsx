@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 class Modal extends React.Component {
   constructor(props) {
@@ -30,6 +31,10 @@ class Modal extends React.Component {
             <Gallery>
               <Primary>
                 <PrimaryPhoto src={this.state.primaryPhoto.imageUrl} />
+                <Overlay>
+                  <div>{this.state.primaryPhoto.caption}</div>
+                  <div style={{color: '#999', fontWeight: '400', fontSize: '12px' }}>{moment(this.props.date).format('MMMM Do, YYYY')}</div>
+                </Overlay>
               </Primary>
               <PhotoBox>
                 {this.props.photos.map((item) => <Photo src={item.imageUrl} onClick={this.changePhoto} id={item.photo_id} />)}
@@ -77,7 +82,7 @@ const Primary = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px 0px 0px 6px;
+  border-radius: 4px 0px 0px 4px;
   padding: 0px 6px;
 
 `;
@@ -103,6 +108,18 @@ const Photo = styled.img`
   width: 300px;
   height: 165px;
   object-fit: cover;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  right: 370px;
+  bottom: 30px;
+  left: 30px;
+  padding: 3px 6px;
+  border-radius: 0 0 4px 4px;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  text-align: left;
 `;
 
 export default Modal;

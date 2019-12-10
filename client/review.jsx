@@ -40,7 +40,7 @@ class Review extends React.Component {
               {' ' + Moment(this.state.review.date).format('MM/DD/YYYY')} </Date>
             <Text>{this.state.review.text} </Text>
           </div>
-          <SmallGallery photos={this.state.photos} />
+          <SmallGallery photos={this.state.photos} date={this.state.review.date}/>
           <ButtonBox>
             <Button id="useful" onClick={this.onVote}>
               <UsefulIcon />
