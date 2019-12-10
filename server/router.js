@@ -2,8 +2,11 @@
 /* eslint-disable import/newline-after-import */
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const controller = require('./controller.js');
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,10 +28,10 @@ app.get('/api/business/:businessId', (req, res) => {
 });
 
 app.put('/api/vote/:reviewId/:vote', (req, res) => {
-  controller.putVote(req.params.reviewId, req.params.vote) // should send back an updated review object
+  controller.putVote(req.params.reviewId, req.params.vote)
     .then((data) => res.send(data))
     .catch((err) => console.error(err));
-})
+});
 
 app.post('/api/review', (req, res) => {
   // request should include the fields needed to create a new record in the database

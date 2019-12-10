@@ -21,7 +21,7 @@ class Review extends React.Component {
     const name = event.target.id;
     $.ajax({
       method: 'PUT',
-      url: `/api/vote/${this.state.review.review_id}/${name}`,
+      url: `http://localhost:3001/api/vote/${this.state.review.review_id}/${name}`,
     })
       .then((res) => {
         this.setState({ review: res });
