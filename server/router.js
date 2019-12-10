@@ -2,8 +2,11 @@
 /* eslint-disable import/newline-after-import */
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const controller = require('./controller.js');
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +23,12 @@ app.get('/api/business/:businessId', (req, res) => {
   console.log(req.params.businessId);
   controller.getBusiness(req.params.businessId)
     .then((data) => controller.getReviewsAndPhotos(data.dataValues.business_id))
+    .then((data) => res.send(data))
+    .catch((err) => console.error(err));
+});
+
+app.put('/api/vote/:reviewId/:vote', (req, res) => {
+  controller.putVote(req.params.reviewId, req.params.vote)
     .then((data) => res.send(data))
     .catch((err) => console.error(err));
 });

@@ -32,7 +32,7 @@ class SmallGallery extends React.Component {
         <PhotoBox>
           {this.props.photos.map((item) => <Photo src={item.imageUrl} onClick={this.showModal} />)}
         </PhotoBox>
-        <Modal show={this.state.show} onClick={this.hideModal} photos={this.props.photos} />
+        <Modal show={this.state.show} onClick={this.hideModal} photos={this.props.photos} date={this.props.date} />
       </div>
     );
   }

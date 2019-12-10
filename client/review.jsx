@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import React from 'react';
 import Moment from 'moment';
+import $ from 'jquery';
 import styled, { css } from 'styled-components';
 import Stars from './stars.jsx';
 import SmallGallery from './smallGallery.jsx';
@@ -9,33 +10,52 @@ import { UsefulIcon, FunnyIcon, CoolIcon } from './icons.jsx';
 class Review extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      review: this.props.data,
+      photos: this.props.data.photos,
+    };
+    this.onVote = this.onVote.bind(this);
+  }
+
+  onVote() {
+    const name = event.target.id;
+    $.ajax({
+      method: 'PUT',
+      url: `http://localhost:3001/api/vote/${this.state.review.review_id}/${name}`,
+    })
+      .then((res) => {
+        this.setState({ review: res });
+      })
+      .catch((err) => console.error(err));
   }
 
   render() {
     return (
       <TotalReview>
-        <User>{this.props.data.user}</User>
+        <User>
+          <img height="60" src="https://s3-media2.fl.yelpcdn.com/assets/srv0/yelp_styleguide/514f6997a318/assets/img/default_avatars/user_60_square.png" />
+          <div style={{ margin: '0 0 0 10px' }}>{this.state.review.user}</div>
+        </User>
         <ReviewBody>
           <div>
             <Date>
-              <Stars stars={this.props.data.stars} />
-              {' ' + Moment(this.props.data.date).format('MM/DD/YYYY')} </Date>
-            <Text>{this.props.data.text} </Text>
+              <Stars stars={this.state.review.stars} />
+              {' ' + Moment(this.state.review.date).format('MM/DD/YYYY')} </Date>
+            <Text>{this.state.review.text} </Text>
           </div>
-          <SmallGallery photos={this.props.data.photos} />
+          <SmallGallery photos={this.state.photos} date={this.state.review.date}/>
           <ButtonBox>
-            <Button>
+            <Button id="useful" onClick={this.onVote}>
               <UsefulIcon />
-              <span> Useful {this.props.data.useful} </span>
+              <span id="useful"> Useful {this.state.review.useful} </span>
             </Button>
-            <Button>
+            <Button id="funny" onClick={this.onVote}>
               <FunnyIcon />
-              <span> Funny {this.props.data.funny} </span>
+              <span id="funny"> Funny {this.state.review.funny} </span>
             </Button>
-            <Button>
+            <Button id="cool" onClick={this.onVote}>
               <CoolIcon />
-              <span> Cool {this.props.data.cool} </span>
+              <span id="cool"> Cool {this.state.review.cool} </span>
             </Button>
           </ButtonBox>
         </ReviewBody>
@@ -58,6 +78,7 @@ const User = styled.div`
   font-size: 14 px;
   font-weight: 700;
   color: #0073bb;
+  display: flex;
   flexDirection: row;
   width: 222px;
 `;
@@ -70,6 +91,8 @@ const ReviewBody = styled.div`
 const Date = styled.div`
   font-weight: 400;
   color: #666;
+  display: flex;
+  flexDirection: row;
 `;
 
 const Text = styled.div`

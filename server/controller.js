@@ -7,4 +7,5 @@ module.exports = {
   postPhoto: (data) => Promise.resolve(model.postPhoto(data)),
   postReview: (data) => Promise.resolve(model.postReview(data)),
   getReviewsAndPhotos: (id) => Promise.resolve(model.getReviewsAndPhotos(id)),
+  putVote: (reviewId, vote) => Promise.resolve(model.putVote(reviewId, vote)),
 };

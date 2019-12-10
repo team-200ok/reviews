@@ -27,4 +27,7 @@ module.exports = {
     label: data.label,
     imageUrl: data.imageUrl,
   }),
+  putVote: (review_id, vote) => db.Review.findOne({ where: { review_id } })
+    .then(review => review.increment(vote, {by: 1}))
+    .then(review => db.Review.findOne({ where: { review_id } })),
 };
