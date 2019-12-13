@@ -21,7 +21,7 @@ class App extends React.Component {
   apiGet(businessId) {
     $.ajax({
       method: 'GET',
-      url: `http://localhost:3001/api/business${businessId}`,
+      url: `/api/business${businessId}`,
     })
       .then((data) => {
         this.extractReviews(data);
