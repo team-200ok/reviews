@@ -1,3 +1,4 @@
+
 // eslint-disable-next-line import/newline-after-import
 const Sequelize = require('sequelize');
 const useDb = process.env.NODE_ENV === 'test' ? 'yumnoms_test' : 'yumnoms';
