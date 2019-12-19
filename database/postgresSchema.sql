@@ -10,8 +10,8 @@ DROP TABLE IF EXISTS business, reviews, images;
 
 
 CREATE TABLE business(
-  b_id INTEGER UNIQUE NOT NULL,
-  business_name varchar(20) PRIMARY KEY,
+  b_id SERIAL PRIMARY KEY,
+  business_name varchar(20) NOT NULL,
   claimed BOOLEAN DEFAULT 0,
   category varchar(20),
   business_date DATE NOT NULL,
@@ -20,8 +20,8 @@ CREATE TABLE business(
 
 
 CREATE TABLE users(
-  u_id INTEGER UNIQUE NOT NULL,
-  user_name varchar(20) PRIMARY KEY,
+  u_id SERIAL PRIMARY KEY,
+  user_name varchar(20) NOT NULL,
   user_date DATE NOT NULL,
   friend_count SMALLINT DEFAULT 0,
   review_count INTEGER DEFAULT 0,
