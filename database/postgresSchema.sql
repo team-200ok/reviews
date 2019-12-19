@@ -11,9 +11,9 @@ DROP TABLE IF EXISTS business, reviews, images;
 
 CREATE TABLE business(
   b_id SERIAL PRIMARY KEY,
-  business_name varchar(20) NOT NULL,
+  business_name VARCHAR(20) NOT NULL,
   claimed BOOLEAN DEFAULT 0,
-  category varchar(20),
+  category VARCHAR(20),
   business_date DATE NOT NULL,
   description TEXT
 );
@@ -21,7 +21,9 @@ CREATE TABLE business(
 
 CREATE TABLE users(
   u_id SERIAL PRIMARY KEY,
-  user_name varchar(20) NOT NULL,
+  first_name VARCHAR(15) NOT NULL,
+  last_name VARCHAR(20),
+  email VARCHAR(50) NOT NULL,
   user_date DATE NOT NULL,
   friend_count SMALLINT DEFAULT 0,
   review_count INTEGER DEFAULT 0,
