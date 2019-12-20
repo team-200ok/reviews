@@ -9,7 +9,7 @@ const createBusiness = function () {
   // eslint-disable-next-line no-plusplus
   for (let i = 1; i < 100000; i++) {
     businesses.push({
-      b_id: i,
+      id: i,
       business_name: faker.company.companyName(),
       claimed: Math.floor(Math.random() * 2),
       category: faker.lorem.word(),
@@ -26,7 +26,7 @@ const createUsers = function () {
   // eslint-disable-next-line no-plusplus
   for (let i = 1; i < 100000; i++) {
     users.push({
-      u_id: i,
+      id: i,
       first_name: faker.name.firstName(),
       last_name: faker.name.lastName(),
       email: faker.internet.email(),
@@ -48,13 +48,14 @@ const createReviews = function () {
   // eslint-disable-next-line no-plusplus
   for (let i = 1; i < 100000; i++) {
     reviews.push({
-      r_id: i,
+      id: i,
       review_date: faker.date.recent(),
       review_text: faker.lorem.paragraph(),
       star_count: Math.floor(Math.random() * 5 + 1),
       useful_count: Math.floor(Math.random() * 50),
       funny_count: Math.floor(Math.random() * 50),
       cool_count: Math.floor(Math.random() * 50),
+      images: createImageArray(),
       business_id: Math.floor(Math.random() * 100000 + 1),
       user_id: Math.floor(Math.random() * 100000 + 1),
     });
@@ -69,7 +70,7 @@ const createComments = function () {
   // eslint-disable-next-line no-plusplus
   for (let i = 1; i < 100000; i++) {
     comments.push({
-      c_id: i,
+      id: i,
       comment_date: faker.date.recent(),
       comment_text: faker.lorem.paragraph(),
       parent_id: Math.floor(Math.random() * 100000 + 1),
@@ -86,7 +87,7 @@ const createImages = function () {
   // eslint-disable-next-line no-plusplus
   for (let i = 1; i < 100000; i++) {
     images.push({
-      i_id: i,
+      id: i,
       image_url: `https://loremflickr.com/320/240?lock=${Math.floor(Math.random() * 30000)}`,
       image_date: faker.date.recent(),
       caption: faker.lorem.sentence(),
@@ -97,6 +98,16 @@ const createImages = function () {
   console.log('images array completed');
   return images;
 };
+
+// helper functions
+const createImageArray = function (upperBound) {
+  const imageArray = [];
+  let iterationCap = Math.floor(Math.random() * 5 + 1);
+  for (let i = 0; i < iterationCap; i++) {
+    imageArray.push(createImages());
+  }
+  return imageArray;
+}
 
 module.exports = {
   createBusiness,
