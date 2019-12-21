@@ -21,10 +21,10 @@ const createBusinessString = function (recordCount) {
     business += `${faker.lorem.word()},`;
     business += `${faker.date.recent()},`;
     business += `${Math.floor(Math.random() * 10000 + 1)}`;
-    business += `${faker.lorem.paragraph()},`;
+    business += `${faker.lorem.paragraph()}`;
     business += '\n';
   }
-  return business;
+  return business.slice(0, -1);
 };
 
 const createUsersString = function (recordCount) {
@@ -44,6 +44,50 @@ const createUsersString = function (recordCount) {
   }
 
   return users.slice(0, -1);
+};
+
+const createReviewsString = function (recordCount) {
+  let reviews = '';
+  for (let i = 1; i <= recordCount; i++) {
+    reviews += `${faker.date.recent()},`;
+    reviews += `${faker.lorem.paragraph()},`;
+    reviews += `${Math.floor(Math.random() * 5 + 1)},`;
+    reviews += `${Math.floor(Math.random() * 10000)},`;
+    reviews += `${Math.floor(Math.random() * 10000)},`;
+    reviews += `${Math.floor(Math.random() * 10000)},`;
+    reviews += `${Math.floor(Math.random() * 10000000)},`;
+    reviews += `${Math.floor(Math.random() * 100000)}`;
+    if (i !== recordCount) { reviews += '\n'; }
+  }
+
+  return reviews;
+};
+
+const createCommentsString = function (recordCount) {
+  let comments = '';
+  for (let i = 1; i <= recordCount; i++) {
+    comments += `${faker.date.recent()},`;
+    comments += `${faker.lorem.paragraph()},`;
+    comments += `${Math.floor(Math.random() * 100000000)},`;
+    comments += `${Math.floor(Math.random() * 100000)}`;
+    if (i !== recordCount) { comments += '\n'; }
+  }
+
+  return comments;
+};
+
+const createImagesString = function (recordCount) {
+  let images = '';
+  for (let i = 1; i <= recordCount; i++) {
+    images += `https://loremflickr.com/320/240?lock=${Math.floor(Math.random() * 30000)},`;
+    images += `${faker.date.recent()},`;
+    images += `${faker.lorem.sentence()},`;
+    images += `${Math.floor(Math.random() * 100000000)},`;
+    images += `${Math.floor(Math.random() * 100000)}`;
+    if (i !== recordCount) { images += '\n'; }
+  }
+
+  return images;
 };
 
 const createTableCSV = function (createTableString, recordCount, tableName) {
@@ -67,7 +111,6 @@ const connectToPostgres = async function () {
         .query(`COPY users(first_name,last_name,email,user_date,friend_count,review_count,image_count,region,city) FROM '${path.resolve('users.csv')}' DELIMITER ',';`)
         .then((res) => {
           client.release();
-          // console.log(res.rows.length);
         })
         .catch((err) => {
           client.release();
@@ -80,8 +123,6 @@ const connectToPostgres = async function () {
     .catch((error) => {
       console.error('Promise.all errored out', error.stack);
     });
-  // await pool.end();
-  // console.log(res);
 };
 
 connectToPostgres();
