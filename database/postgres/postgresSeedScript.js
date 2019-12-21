@@ -2,60 +2,85 @@
 /* eslint-disable func-names */
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 const { Pool } = require('pg');
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const faker = require('faker');
 
 const pool = new Pool({ database: 'reviews' });
 
-const connectToPostgres = (async function () {
-  const res = await pool.query(`SELECT
-  COLUMN_NAME
-FROM
-  information_schema.COLUMNS
-WHERE
-  TABLE_NAME = 'business';`);
-  console.log(res);
-  await pool.end();
-}());
-
-// pool.connect((err, client, release) => {
-//   if (err) {
-//     return console.error('Error acquiring client', err.stack);
-//   }
-//   client.query('SELECT NOW()', (error, result) => {
-//     release();
-//     if (error) {
-//       return console.error('Error executing query', err.stack)
-//     }
-//     console.log(result.rows);
-//   });
-// });
-
+pool.on('error', (err, client) => {
+  console.error('Unexpected error on idle client', err);
+  process.exit(-1);
+});
 
 const createBusinessString = function (recordCount) {
-  let business = 'id,business_name,claimed,category,business_date,description,\n';
+  let business = '';
   for (let i = 1; i <= recordCount; i++) {
-    business += `${i},`;
     business += `${faker.company.companyName()},`;
     business += `${Math.floor(Math.random() * 2)},`;
     business += `${faker.lorem.word()},`;
     business += `${faker.date.recent()},`;
+    business += `${Math.floor(Math.random() * 10000 + 1)}`;
     business += `${faker.lorem.paragraph()},`;
     business += '\n';
   }
   return business;
 };
-const createTableCSV = function (createTableString, recordCount, tableName) {
-  fs.writeFile(path.resolve(`${tableName}.csv`), createTableString(recordCount), (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('CSV created');
-    }
-  });
+
+const createUsersString = function (recordCount) {
+  let users = '';
+  for (let i = 1; i <= recordCount; i++) {
+    users += `${faker.name.firstName()},`;
+    users += `${faker.name.lastName()},`;
+    users += `${faker.internet.email()},`;
+    users += `${faker.date.recent()},`;
+    users += `${Math.floor(Math.random() * 10000)},`;
+    users += `${Math.floor(Math.random() * 10000)},`;
+    users += `${Math.floor(Math.random() * 300)},`;
+    users += `${faker.random.locale()},`;
+    users += `${faker.address.city()}`;
+    // users += `${'https://loremflickr.com/320/240'}`;
+    users += '\n';
+  }
+
+  return users.slice(0, -1);
 };
 
-createTableCSV(createBusinessString, 10, 'business');
+const createTableCSV = function (createTableString, recordCount, tableName) {
+  return fs.writeFile(path.resolve(`${tableName}.csv`), createTableString(recordCount));
+};
 
-// `COPY business FROM ${path.resolve(`postgres${tableName}CSV.txt`)} DELIMITER ',' CSV HEADER`
+const connectToPostgres = async function () {
+  const start = new Date();
+  let promises = [];
+  for (let i = 0; i < 10; i++) {
+    // eslint-disable-next-line quotes
+    promises.push((async () => {
+      await createTableCSV(createUsersString, 1000000, 'users');
+      const client = await pool.connect();
+      try {
+        const res = await client.query(`COPY users(first_name,last_name,email,user_date,friend_count,review_count,image_count,region,city) FROM '${path.resolve('users.csv')}' DELIMITER ',';`)
+        console.log(res.rows[0]);
+      } finally {
+        client.release();
+      }
+    })().catch((err) => { console.log(err.stack); }));
+    // pool.connect((err, client, done) => {
+    //   client.query(`COPY users(first_name,last_name,email,user_date,friend_count,review_count,image_count,region,city) FROM '${path.resolve('users.csv')}' DELIMITER ',';`)
+    //     .catch((err) => {
+    //       console.error('Error executing query', err.stack);
+    //     });
+
+    // })
+  }
+  Promise.all(promises).then(() => {
+    console.log(`This query took ${new Date() - start} milliseconds`);
+  })
+    .catch(error => {
+      console.error(error.stack);
+    })
+  // await pool.end();
+  // console.log(res);
+};
+
+connectToPostgres();

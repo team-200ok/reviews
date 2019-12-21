@@ -8,6 +8,19 @@ CREATE DATABASE reviews;
 
 DROP TABLE IF EXISTS business, users, reviews, comments, images;
 
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  first_name VARCHAR(15) NOT NULL,
+  last_name VARCHAR(20),
+  email VARCHAR(50) NOT NULL,
+  user_date TEXT NOT NULL,
+  friend_count SMALLINT DEFAULT 0,
+  review_count INTEGER DEFAULT 0,
+  image_count INTEGER DEFAULT 0,
+  region VARCHAR(30),
+  city VARCHAR(30) NOT NULL,
+  avatar_url VARCHAR(100) DEFAULT 'https://loremflickr.com/320/240'
+);
 
 CREATE TABLE business (
   id SERIAL PRIMARY KEY,
@@ -20,19 +33,6 @@ CREATE TABLE business (
 );
 
 
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  first_name VARCHAR(15) NOT NULL,
-  last_name VARCHAR(20),
-  email VARCHAR(50) NOT NULL,
-  user_date DATE NOT NULL,
-  friend_count SMALLINT DEFAULT 0,
-  review_count INTEGER DEFAULT 0,
-  image_count INTEGER DEFAULT 0,
-  region VARCHAR(30),
-  city VARCHAR(30) NOT NULL,
-  avatar_url VARCHAR(100) DEFAULT 'https://loremflickr.com/320/240'
-);
 
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
