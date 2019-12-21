@@ -47,38 +47,39 @@ const createUsersString = function (recordCount) {
 };
 
 const createTableCSV = function (createTableString, recordCount, tableName) {
-  return fs.writeFile(path.resolve(`${tableName}.csv`), createTableString(recordCount));
+  fs.writeFile(path.resolve(`${tableName}.csv`), createTableString(recordCount)).then(() => {
+    console.log('CSV generated');
+  })
+    .catch((err) => {
+      console.error(err.stack);
+    })
 };
 
 const connectToPostgres = async function () {
   const start = new Date();
-  let promises = [];
+  const promises = [];
+  await createTableCSV(createUsersString, 1000000, 'users');
   for (let i = 0; i < 10; i++) {
     // eslint-disable-next-line quotes
-    promises.push((async () => {
-      await createTableCSV(createUsersString, 1000000, 'users');
-      const client = await pool.connect();
-      try {
-        const res = await client.query(`COPY users(first_name,last_name,email,user_date,friend_count,review_count,image_count,region,city) FROM '${path.resolve('users.csv')}' DELIMITER ',';`)
-        console.log(res.rows[0]);
-      } finally {
-        client.release();
-      }
-    })().catch((err) => { console.log(err.stack); }));
-    // pool.connect((err, client, done) => {
-    //   client.query(`COPY users(first_name,last_name,email,user_date,friend_count,review_count,image_count,region,city) FROM '${path.resolve('users.csv')}' DELIMITER ',';`)
-    //     .catch((err) => {
-    //       console.error('Error executing query', err.stack);
-    //     });
-
-    // })
+    promises.push(pool
+      .connect()
+      .then(async (client) => client
+        .query(`COPY users(first_name,last_name,email,user_date,friend_count,review_count,image_count,region,city) FROM '${path.resolve('users.csv')}' DELIMITER ',';`)
+        .then((res) => {
+          client.release();
+          // console.log(res.rows.length);
+        })
+        .catch((err) => {
+          client.release();
+          console.log(err.stack);
+        })));
   }
   Promise.all(promises).then(() => {
     console.log(`This query took ${new Date() - start} milliseconds`);
   })
-    .catch(error => {
-      console.error(error.stack);
-    })
+    .catch((error) => {
+      console.error('Promise.all errored out', error.stack);
+    });
   // await pool.end();
   // console.log(res);
 };
