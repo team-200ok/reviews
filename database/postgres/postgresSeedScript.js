@@ -16,12 +16,12 @@ pool.on('error', (err, client) => {
 const createBusinessString = function (recordCount) {
   let business = '';
   for (let i = 1; i <= recordCount; i++) {
-    business += `${faker.company.companyName()},`;
+    business += `${faker.lorem.word()},`;
     business += `${Math.floor(Math.random() * 2)},`;
     business += `${faker.lorem.word()},`;
     business += `${faker.date.recent()},`;
-    business += `${Math.floor(Math.random() * 10000 + 1)}`;
-    business += `${faker.lorem.paragraph()}`;
+    business += `${Math.floor(Math.random() * 10000 + 1)},`;
+    business += `${faker.lorem.sentence()}`;
     business += '\n';
   }
   return business.slice(0, -1);
@@ -50,13 +50,13 @@ const createReviewsString = function (recordCount) {
   let reviews = '';
   for (let i = 1; i <= recordCount; i++) {
     reviews += `${faker.date.recent()},`;
-    reviews += `${faker.lorem.paragraph()},`;
+    reviews += `${faker.lorem.sentences()},`;
     reviews += `${Math.floor(Math.random() * 5 + 1)},`;
     reviews += `${Math.floor(Math.random() * 10000)},`;
     reviews += `${Math.floor(Math.random() * 10000)},`;
     reviews += `${Math.floor(Math.random() * 10000)},`;
-    reviews += `${Math.floor(Math.random() * 10000000)},`;
-    reviews += `${Math.floor(Math.random() * 100000)}`;
+    reviews += `${Math.floor(Math.random() * 1000000)},`;
+    reviews += `${Math.floor(Math.random() * 1000000)}`;
     if (i !== recordCount) { reviews += '\n'; }
   }
 
@@ -81,7 +81,7 @@ const createImagesString = function (recordCount) {
   for (let i = 1; i <= recordCount; i++) {
     images += `https://loremflickr.com/320/240?lock=${Math.floor(Math.random() * 30000)},`;
     images += `${faker.date.recent()},`;
-    images += `${faker.lorem.sentence()},`;
+    images += `${faker.lorem.words()},`;
     images += `${Math.floor(Math.random() * 100000000)},`;
     images += `${Math.floor(Math.random() * 100000)}`;
     if (i !== recordCount) { images += '\n'; }
@@ -125,4 +125,113 @@ const connectToPostgres = async function () {
     });
 };
 
-connectToPostgres();
+// connectToPostgres();
+
+const seedBusinesses = async function () {
+  const start = new Date();
+  const promises = [];
+  await createTableCSV(createBusinessString, 1000000, 'business');
+  for (let i = 0; i < 10; i++) {
+    // eslint-disable-next-line quotes
+    promises.push(pool
+      .connect()
+      .then(async (client) => client
+        .query(`COPY business(business_name,claimed,category,business_date,user_id,description) FROM '${path.resolve('business.csv')}' DELIMITER ',';`)
+        .then((res) => {
+          client.release();
+        })
+        .catch((err) => {
+          client.release();
+          console.log(err.stack);
+        })));
+  }
+  Promise.all(promises).then(() => {
+    console.log(`This query took ${(new Date() - start) / 1000} seconds`);
+  })
+    .catch((error) => {
+      console.error('Promise.all errored out', error.stack);
+    });
+};
+
+// seedBusinesses();
+
+const seedReviews = async function () {
+  const start = new Date();
+  const promises = [];
+  await createTableCSV(createReviewsString, 2000000, 'reviews');
+  for (let i = 0; i < 25; i++) {
+    // eslint-disable-next-line quotes
+    promises.push(pool
+      .connect()
+      .then(async (client) => client
+        .query(`COPY reviews(review_date,review_text,star_count,useful_count,funny_count,cool_count,business_id,user_id) FROM '${path.resolve('reviews.csv')}' DELIMITER ',';`)
+        .then((res) => {
+          client.release();
+        })
+        .catch((err) => {
+          client.release();
+          console.log(err.stack);
+        })));
+  }
+  Promise.all(promises).then(() => {
+    console.log(`This query took ${(new Date() - start) / 1000} seconds`);
+  })
+    .catch((error) => {
+      console.error('Promise.all errored out', error.stack);
+    });
+};
+
+const seedComments = async function () {
+  const start = new Date();
+  const promises = [];
+  await createTableCSV(createCommentsString, 1000000, 'comments');
+  for (let i = 0; i < 2; i++) {
+    // eslint-disable-next-line quotes
+    promises.push(pool
+      .connect()
+      .then(async (client) => client
+        .query(`COPY comments(comment_date,comment_text,parent_id,user_id) FROM '${path.resolve('comments.csv')}' DELIMITER ',';`)
+        .then((res) => {
+          client.release();
+        })
+        .catch((err) => {
+          client.release();
+          console.log(err.stack);
+        })));
+  }
+  Promise.all(promises).then(() => {
+    console.log(`This query took ${(new Date() - start) / 1000} seconds`);
+  })
+    .catch((error) => {
+      console.error('Promise.all errored out', error.stack);
+    });
+};
+// seedComments();
+
+const seedImages = async function () {
+  const start = new Date();
+  const promises = [];
+  await createTableCSV(createImagesString, 1000000, 'images');
+  for (let i = 0; i < 2; i++) {
+    // eslint-disable-next-line quotes
+    promises.push(pool
+      .connect()
+      .then(async (client) => client
+        .query(`COPY images(image_url,image_date,caption,reviews_id,user_id) FROM '${path.resolve('images.csv')}' DELIMITER ',';`)
+        .then((res) => {
+          client.release();
+        })
+        .catch((err) => {
+          client.release();
+          console.log(err.stack);
+        })));
+  }
+  Promise.all(promises).then(() => {
+    console.log(`This query took ${(new Date() - start) / 1000} seconds`);
+  })
+    .catch((error) => {
+      console.error('Promise.all errored out', error.stack);
+    });
+};
+
+seedImages();

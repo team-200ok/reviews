@@ -24,10 +24,10 @@ CREATE TABLE users (
 
 CREATE TABLE business (
   id SERIAL PRIMARY KEY,
-  business_name VARCHAR(20) NOT NULL,
+  business_name VARCHAR(40) NOT NULL,
   claimed BOOLEAN DEFAULT 'f',
   category VARCHAR(20),
-  business_date DATE NOT NULL,
+  business_date TEXT NOT NULL,
  user_id INTEGER REFERENCES users(id),
   description TEXT
 );
@@ -36,7 +36,7 @@ CREATE TABLE business (
 
 CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
-  review_date DATE NOT NULL,
+  review_date TEXT NOT NULL,
   review_text TEXT NOT NULL,
   star_count SMALLINT NOT NULL,
   useful_count INTEGER DEFAULT 0,
@@ -48,7 +48,7 @@ CREATE TABLE reviews (
 
 CREATE TABLE comments (
 id SERIAL PRIMARY KEY,
-comment_date DATE NOT NULL,
+comment_date TEXT NOT NULL,
 comment_text TEXT NOT NULL,
 parent_id INTEGER REFERENCES reviews(id),
 user_id INTEGER REFERENCES users(id)
@@ -57,7 +57,7 @@ user_id INTEGER REFERENCES users(id)
 CREATE TABLE images (
   id SERIAL PRIMARY KEY,
   image_url VARCHAR(100) NOT NULL,
-  image_date DATE NOT NULL,
+  image_date TEXT NOT NULL,
   caption VARCHAR(80) NOT NULL,
   reviews_id INTEGER REFERENCES reviews(id),
   user_id INTEGER REFERENCES users(id)

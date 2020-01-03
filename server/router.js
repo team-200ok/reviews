@@ -5,12 +5,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const controller = require('./controller.js');
 const app = express();
+const routesSDC = require('./SDCserver/routes');
 
 app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/sdc', routesSDC);
 app.use('/:id', express.static('public'));
 
 app.get('/api/review/:businessId', (req, res) => {
@@ -20,7 +22,6 @@ app.get('/api/review/:businessId', (req, res) => {
 });
 
 app.get('/api/business/:businessId', (req, res) => {
-  console.log(req.params.businessId);
   controller.getBusiness(req.params.businessId)
     .then((data) => controller.getReviewsAndPhotos(data.dataValues.business_id))
     .then((data) => res.send(data))
