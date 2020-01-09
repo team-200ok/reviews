@@ -24,3 +24,6 @@ coverage
 build/
 dist/
 public/
+
+# ignore csv
+database/postgres/comments.csv

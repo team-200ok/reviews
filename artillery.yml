@@ -1,0 +1,14 @@
+config:
+  target: 'http://localhost:3001'
+  phases:
+    - duration: 60
+      arrivalRate: 20
+      rampTo: 400
+      name: "Warm up the application"
+    - duration: 30
+      arrivalRate: 400
+      name: 'Sustain peak rate'
+scenarios:
+  - flow:
+    - get:
+        url: "/sdc/business/14"
